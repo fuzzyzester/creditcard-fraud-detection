@@ -1,156 +1,197 @@
+#  Credit Card Fraud Detection (with FastAPI Deployment + Power BI Dashboard)
 
-# 💳 Credit Card Fraud Detection & Risk Insights
+This project aims to **detect fraudulent credit card transactions** using machine learning, deploy the best model via **FastAPI**, and visualize insights and prediction results in **Power BI**.
 
-This project showcases an end-to-end machine learning solution for detecting credit card fraud, deploying the model via FastAPI, and visualizing key results and KPIs through a compelling Power BI dashboard. It blends both **Data Science** and **Data Engineering** best practices.
+<br>
 
----
+![Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/powerBIdashboard_CreditCard_fraud_detection.png)
 
-##  Objective
-
-- Detect fraudulent transactions using ML models.
-- Deploy the model via a FastAPI REST API.
-- Create a business-facing interactive Power BI dashboard.
-- Demonstrate the ML lifecycle including data preparation, modeling, evaluation, deployment, and visualization.
+🔗 [Power BI Dashboard (Full View)](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/powerBIdashboard_CreditCard_fraud_detection.png)
 
 ---
 
-##  Machine Learning Process
+##  Table of Contents
 
-### 1️⃣ Exploratory Data Analysis (EDA)
-
-- **Time** was dropped as it had no predictive value.
-- **V1–V28**: PCA-transformed features.
-- **Amount**: Skewed and required scaling.
-- **Class**: Highly imbalanced (0 = Legit, 1 = Fraud).
-
-### 2️⃣ Missing and Duplicates Check
-- No missing values found.
-- Duplicate transactions were removed for model clarity.
-
-### 3️⃣ Class Imbalance Check
-- 99.83% legitimate vs 0.17% fraud.
-- Addressed using class weighting and stratified sampling.
-
-### 4️⃣ Distribution and Outlier Analysis
-- Amount had outliers and was heavily right-skewed.
-- Scaled using `StandardScaler` → `Scaled_Amount`.
-
-### 5️⃣ Correlation Analysis
-- V10, V12, V14 were highly correlated with the fraud class.
-- Features like `Time` were removed.
+- [ Dataset](#dataset)
+- [ Data Preprocessing](#data-preprocessing)
+- [ Handling Class Imbalance](#handling-class-imbalance)
+- [ Model Building & Evaluation](#model-building--evaluation)
+- [ Overfitting/Underfitting Analysis](#overfittingunderfitting-check)
+- [ Final Model Selection](#final-model-selection)
+- [ FastAPI Deployment](#fastapi-deployment)
+- [ Power BI Integration](#power-bi-integration)
+- [ Learnings](#learnings)
+- [ Future Improvements](#future-improvements)
+- [ Project Links](#project-links)
+- [ Author](#author)
 
 ---
 
-## 🔧 Data Preprocessing
+##  Dataset
 
-- Scaled `Amount` column.
-- Dropped uninformative columns.
-- Final dataset: 28 PCA features + Scaled_Amount + Class.
-
----
-
-## 🤖 Model Training
-
-### Models Compared:
-| Model              | Precision | Recall | F1 Score | AUC   |
-|-------------------|-----------|--------|----------|--------|
-| Logistic Regression | 0.8289   | 0.6429 | 0.7241   | 0.9560 |
-| Random Forest       | 0.9419   | 0.8265 | 0.8804   | 0.9528 |
-| XGBoost             | 0.8632   | 0.8367 | 0.8497   | 0.9695 |
-
-### Best Model: ✅ Tuned XGBoost
-- Achieved **F1: 0.8497**, **AUC: 0.9723** after tuning with `RandomizedSearchCV`.
+- **Source**: [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud)
+- **Rows**: 284,807 transactions
+- **Fraud cases**: 492 (~0.17%)
+- Features: V1–V28 (PCA-transformed), `Amount`, `Time`, `Class` (target)
 
 ---
 
-##  Model Deployment (FastAPI)
+##  Data Preprocessing
 
-The trained model was deployed using a RESTful API via **FastAPI**.
+1. Dropped `Time` (not useful for prediction).
+2. Scaled the `Amount` column using `StandardScaler`.
+3. Renamed it to `Scaled_Amount` and moved `Class` to the end.
+4. Final dataset: `X` (features), `y` (target)
 
-### Features:
-- Endpoint `/predict` accepts JSON input of transaction features.
-- Returns prediction (Fraud/Legitimate) and confidence score.
-- Built using `Pydantic` for schema validation.
-- Docker-ready and production-scalable.
-- Model and scaler saved using `joblib`.
+ [View Full Notebook](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/creditcard_fraud.ipynb)
 
 ---
 
-## 📤 Data Engineering Practices
+##  Handling Class Imbalance
 
-- **Model Serialization**: `joblib.dump()` to save models.
-- **FastAPI Deployment**: Clean routing, schema validation.
-- **Prediction Pipeline**: API returns both class and fraud probability.
-- **Automated CSV Export**: Predictions saved as `fraud_predictions.csv` for Power BI.
-- **Modular Structure**: Data pipeline separated from ML code.
+Instead of using SMOTE, this project handled imbalance **within the model**:
 
----
+- `class_weight='balanced'` for Logistic Regression & Random Forest
+- `scale_pos_weight = (count_0 / count_1)` for XGBoost
 
-##  Power BI Dashboard Highlights
-
-![Dashboard Preview](./Screenshot_2025-03-28_125428.png)
-
-### Key Sections:
-- **KPIs**: Total Transactions, Accuracy, Precision, Recall, F1, Detection Score.
-- **Charts**: Fraud Distribution Pie, Prediction Confidence Bar.
-- **Table**: Transaction drill-down with fraud probability, actual & predicted labels.
-- **Dynamic Filtering**: Slider for threshold, dropdowns for class & confidence.
-
-### Enhanced UX Features:
-- Soft shadows and white backgrounds.
-- Rounded corners on cards.
-- Clear legend labels (Fraud Prediction, Legitimate Prediction).
-- Tooltip explanations for confidence, scaled amount, and risk score.
+✅ Avoids synthetic data and works well for real-time APIs.
 
 ---
 
-##  Project Structure
+##  Model Building & Evaluation
+
+Trained and evaluated:
+
+1. **Logistic Regression**
+2. **Random Forest (Tuned)**
+3. **XGBoost**
+
+### Metrics Used:
+
+- Precision
+- Recall
+- F1-Score
+- ROC-AUC
+
+###  Evaluation Table:
+
+| Model               | Precision (1) | Recall (1) | F1-score (1) | ROC-AUC |
+|--------------------|---------------|------------|--------------|---------|
+| Logistic Regression| 0.056         | 0.918      | 0.106        | 0.970   |
+| Random Forest       | 0.943         | 0.847      | 0.892        | 0.958   |
+| XGBoost             | 0.685         | 0.867      | 0.766        | 0.975   |
+
+---
+
+##  Overfitting/Underfitting Check
 
 ```
-credit-card-fraud-detection/
-├── data/
-├── notebooks/
-├── api/
-│   ├── main.py
-│   └── schemas.py
-├── models/
-│   ├── logistic_regression_model.pkl
-│   ├── random_forest_model.pkl
-│   ├── xgboost_model_pre_tuned.pkl
-│   └── tuned_xgboost_model.pkl
-├── exports/
-│   └── fraud_predictions.csv
-├── powerbi/
-│   └── Fraud_Dashboard.pbix
-└── README.md
+Random Forest:
+Train F1 (1): 1.000 | Test F1 (1): 0.892 → Overfitting
+
+Tuned RF (Final):
+Train F1 (1): 0.937 | Test F1 (1): 0.818 →  Acceptable
+
+Logistic Regression:
+Stable, no overfitting. Low precision though.
 ```
 
 ---
 
-## 🔍 Key Learnings
+##  Final Model Selection
 
-- Working with real-world imbalanced datasets requires careful evaluation metrics.
-- XGBoost is a strong performer for fraud use cases.
-- FastAPI is a lightweight yet powerful option for model deployment.
-- Power BI can turn complex ML outputs into business-friendly visuals.
+**✔ Selected:** Tuned **Random Forest Classifier**
 
----
+- Good trade-off between precision and recall
+- ROC-AUC: 0.984 on test
+- Slight overfitting, but improved with tuning
 
-##  Future Improvements
+ [Download Final Model (.pkl)](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/fraud_model_final.pkl)
 
-- Integrate real-time fraud detection (streaming).
-- Add SHAP interpretability for feature importance.
-- Automate with Data Factory or Airflow.
-- CI/CD for model updates and dashboard refresh.
+ [Predictions CSV](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/fraud_predictions.csv)
 
 ---
 
-##  Final Note
+##  FastAPI Deployment
 
-This project bridges **Data Science**, **Data Engineering**, and **Business Intelligence** to deliver real-world, production-ready fraud detection and insights.
+The final model was deployed using **FastAPI**, making predictions available via RESTful API.
+
+### ▶ Example Prediction Request
+
+```json
+POST /predict
+
+{
+  "V1": -1.3598,
+  "V2": -0.0728,
+  ...
+  "V28": -0.0210,
+  "Scaled_Amount": 0.244
+}
+```
+
+###  Response
+
+```json
+{
+  "prediction": 0,
+  "fraud_probability": 0.0023
+}
+```
+
+ Run locally with:
+
+```bash
+uvicorn main:app --reload
+```
 
 ---
 
- 
-**Tools Used**: Python, scikit-learn, XGBoost, FastAPI, Power BI, GitHub  
-**Dataset**: [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud)
+##  Power BI Integration
+
+- Power BI connected to the API or processed `.csv`
+- Visualized:
+  - Predictions
+  - Fraud vs. non-fraud counts
+  - Probability scores
+- Interactive filters by predicted class
+
+ [Dashboard Screenshot](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/powerBIdashboard_CreditCard_fraud_detection.png)
+
+---
+
+## 📚 Learnings
+
+-  Model balancing strategies without SMOTE
+-  Model tuning and evaluation with class imbalance
+-  Deployed a real ML model with FastAPI
+-  Embedded ML insights into Power BI for business use
+-  Applied ROC-AUC and F1 in real-world imbalanced cases
+
+---
+
+## 🛠 Future Improvements
+
+-  Cloud-host the FastAPI (Azure, Railway, Render)
+-  Add auth/security to API endpoint
+-  Try stacking or ensemble learning
+-  Add batch-upload prediction route
+-  Add anomaly scoring with dynamic thresholds in Power BI
+
+---
+
+## 📁 Project Links
+
+-  Notebook: [creditcard_fraud.ipynb](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/creditcard_fraud.ipynb)  
+-  Final Model: [fraud_model_final.pkl](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/fraud_model_final.pkl)  
+-  Predictions: [fraud_predictions.csv](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/fraud_predictions.csv)  
+-  Power BI Dashboard: [Screenshot](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/powerBIdashboard_CreditCard_fraud_detection.png)
+
+---
+
+##  Author
+
+ Built and deployed by **[fuzzyzester](https://github.com/fuzzyzester)**  
+ Aspiring Data Scientist & Data Engineer | Passionate about real-world ML solutions
+
+---
