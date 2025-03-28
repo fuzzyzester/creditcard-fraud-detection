@@ -1,146 +1,156 @@
+
 # 💳 Credit Card Fraud Detection & Risk Insights
 
-An end-to-end machine learning and business intelligence project to detect potential fraudulent credit card transactions. This project covers **data preprocessing**, **ML modeling**, **deployment of fraud predictions**, and the creation of a **dynamic Power BI dashboard** to deliver actionable insights to business users and stakeholders.
+This project showcases an end-to-end machine learning solution for detecting credit card fraud, deploying the model via FastAPI, and visualizing key results and KPIs through a compelling Power BI dashboard. It blends both **Data Science** and **Data Engineering** best practices.
 
 ---
 
-##  Project Objectives
+##  Objective
 
-- Identify fraudulent transactions using a supervised ML model
-- Create risk scores and confidence levels per transaction
-- Allow users to adjust fraud detection sensitivity
-- Present model performance and predictions in a clear and intuitive Power BI dashboard
-- Align insights with business needs (fraud analysts, finance, risk & HR teams)
-
----
-
-## 🛠️ Tools & Technologies
-
-| Purpose            | Tools Used                               |
-|--------------------|-------------------------------------------|
-| Data Preprocessing | Python (Pandas, NumPy, Scikit-learn)      |
-| Modeling           | Logistic Regression, Random Forest        |
-| Deployment         | Jupyter Notebook, GitHub                  |
-| Dashboard & BI     | Power BI Desktop                          |
-| Version Control    | Git, GitHub Desktop                       |
+- Detect fraudulent transactions using ML models.
+- Deploy the model via a FastAPI REST API.
+- Create a business-facing interactive Power BI dashboard.
+- Demonstrate the ML lifecycle including data preparation, modeling, evaluation, deployment, and visualization.
 
 ---
 
-## 🔄 Workflow Overview
+##  Machine Learning Process
 
-### 1. **Data Exploration & Cleaning**
-- Used the Kaggle credit card dataset (anonymized)
-- Handled class imbalance using **undersampling** for training
-- Scaled transaction amount (StandardScaler)
-- Checked correlation and data distribution
+### 1️⃣ Exploratory Data Analysis (EDA)
 
-### 2. **Feature Engineering**
-- Created `Fraud_Probability` output using model.predict_proba
-- Engineered:
-  - `Risk_Level` (Very Low, Low, Medium, High)
-  - `Confidence_Level` (Very High Risk to Very Low Risk)
-  - `Prediction_Label` (Fraud / Legitimate)
-  - `Actual_Label` (Readable form for ground truth)
+- **Time** was dropped as it had no predictive value.
+- **V1–V28**: PCA-transformed features.
+- **Amount**: Skewed and required scaling.
+- **Class**: Highly imbalanced (0 = Legit, 1 = Fraud).
 
-### 3. **Modeling**
-- Compared Logistic Regression and Random Forest
-- Chose Random Forest based on:
-  - F1 Score: **0.85**
-  - Accuracy: **1.00**
-  - Recall: **0.84**
-  - Precision: **0.86**
+### 2️⃣ Missing and Duplicates Check
+- No missing values found.
+- Duplicate transactions were removed for model clarity.
 
-### 4. **Best Practices Followed**
-- Used **undersampling** for highly imbalanced binary classification
-- Separated feature scaling from label column
-- Exported and deployed predictions with interpretable labels
-- Used **model evaluation metrics relevant to fraud detection** (Recall & F1 over Accuracy)
-- Created readable labels for non-technical users in Power BI
+### 3️⃣ Class Imbalance Check
+- 99.83% legitimate vs 0.17% fraud.
+- Addressed using class weighting and stratified sampling.
+
+### 4️⃣ Distribution and Outlier Analysis
+- Amount had outliers and was heavily right-skewed.
+- Scaled using `StandardScaler` → `Scaled_Amount`.
+
+### 5️⃣ Correlation Analysis
+- V10, V12, V14 were highly correlated with the fraud class.
+- Features like `Time` were removed.
 
 ---
 
-##  Power BI Dashboard: Overview
+## 🔧 Data Preprocessing
 
-###  Title: **Credit Card Fraud Detection & Risk Insights**
-
-An interactive, clean dashboard to help business stakeholders explore fraud risk in real time.
-
----
-
-### 🎯 KPI Metrics (Top Row)
-
-| KPI                           | Description                                                                 |
-|------------------------------|-----------------------------------------------------------------------------|
-| **Total Transactions Checked**  | All transactions reviewed by the system                                     |
-| **Flagged as Potential Fraud** | Based on probability threshold slider                                       |
-| **Overall Fraud Detection Score** | F1 Score - balance between precision and recall                            |
-| **Prediction Accuracy**         | Overall model correctness                                                   |
-| **Frauds Successfully Detected** | Recall – proportion of actual frauds caught by the model                   |
-| **Correct Fraud Alerts**        | Precision – how many fraud alerts were correct                              |
+- Scaled `Amount` column.
+- Dropped uninformative columns.
+- Final dataset: 28 PCA features + Scaled_Amount + Class.
 
 ---
 
-### 🧠 Visuals Explained
+## 🤖 Model Training
 
-#### 📌 **1. Predicted Fraud vs. Non-Fraud (Pie Chart)**
-- **Red:** Fraud Prediction  
-- **Blue:** Legitimate Prediction  
-- Tooltip provides total count and percentage  
-- Clear legend with color indicators
+### Models Compared:
+| Model              | Precision | Recall | F1 Score | AUC   |
+|-------------------|-----------|--------|----------|--------|
+| Logistic Regression | 0.8289   | 0.6429 | 0.7241   | 0.9560 |
+| Random Forest       | 0.9419   | 0.8265 | 0.8804   | 0.9528 |
+| XGBoost             | 0.8632   | 0.8367 | 0.8497   | 0.9695 |
 
-#### 📌 **2. Transactions by Fraud Risk Level (Bar Chart)**
-- X-axis: Number of transactions
-- Y-axis: Fraud probability bins (0.0–0.2, …, 0.8–1.0)
-- **Color Legend:**
-  - Fraud Prediction = Red
-  - Legitimate Prediction = Blue
-- Allows comparison of transaction counts by risk bin
-
-#### 📌 **3. Transaction Details Table**
-Displays details of each transaction:
-- Actual vs Predicted Label
-- Confidence Level
-- Fraud Probability (as %)
-- Risk Level
-- Scaled Amount (rounded to 2 decimals)
-
-Users can scroll and filter using the slider to explore data in a business-friendly way.
-
-#### 🎚️ **Dynamic Threshold Slider**
-Users can adjust what probability counts as “fraud” (from 0.10 to 0.98), affecting:
-- Number of flagged frauds
-- All visuals (KPIs, charts, tables)
+### Best Model: ✅ Tuned XGBoost
+- Achieved **F1: 0.8497**, **AUC: 0.9723** after tuning with `RandomizedSearchCV`.
 
 ---
 
-## 🔍 Key Findings
+##  Model Deployment (FastAPI)
 
-- Model is highly accurate but business users should prioritize **recall** (catching actual frauds)
-- **Fraud predictions are rare** (~0.17%), so threshold tuning is critical
-- Most legitimate transactions have probabilities below 0.2
-- Confidence levels and color-coded risk bins improve interpretability
+The trained model was deployed using a RESTful API via **FastAPI**.
 
----
-
-## 📂 Files Included
-
-| File / Folder             | Description                                       |
-|---------------------------|---------------------------------------------------|
-| `fraud_model.ipynb`       | Python notebook for modeling and exporting output |
-| `fraud_predictions.csv`   | Final dataset with predicted labels and scores    |
-| `credit_card_fraud.pbix`  | Power BI Dashboard                                |
-| `README.md`               | Project documentation                             |
-| `assets/`                 | Screenshots, logos, or supporting visuals         |
+### Features:
+- Endpoint `/predict` accepts JSON input of transaction features.
+- Returns prediction (Fraud/Legitimate) and confidence score.
+- Built using `Pydantic` for schema validation.
+- Docker-ready and production-scalable.
+- Model and scaler saved using `joblib`.
 
 ---
 
-## 🚀 Getting Started
+## 📤 Data Engineering Practices
 
-### Prerequisites:
-- Power BI Desktop
-- Python 3.x with scikit-learn, pandas
-- Git/GitHub Desktop
+- **Model Serialization**: `joblib.dump()` to save models.
+- **FastAPI Deployment**: Clean routing, schema validation.
+- **Prediction Pipeline**: API returns both class and fraud probability.
+- **Automated CSV Export**: Predictions saved as `fraud_predictions.csv` for Power BI.
+- **Modular Structure**: Data pipeline separated from ML code.
 
-### Clone the repo
-```bash
-git clone https://github.com/your-username/credit-card-fraud-detection.git
+---
+
+##  Power BI Dashboard Highlights
+
+![Dashboard Preview](./Screenshot_2025-03-28_125428.png)
+
+### Key Sections:
+- **KPIs**: Total Transactions, Accuracy, Precision, Recall, F1, Detection Score.
+- **Charts**: Fraud Distribution Pie, Prediction Confidence Bar.
+- **Table**: Transaction drill-down with fraud probability, actual & predicted labels.
+- **Dynamic Filtering**: Slider for threshold, dropdowns for class & confidence.
+
+### Enhanced UX Features:
+- Soft shadows and white backgrounds.
+- Rounded corners on cards.
+- Clear legend labels (Fraud Prediction, Legitimate Prediction).
+- Tooltip explanations for confidence, scaled amount, and risk score.
+
+---
+
+##  Project Structure
+
+```
+credit-card-fraud-detection/
+├── data/
+├── notebooks/
+├── api/
+│   ├── main.py
+│   └── schemas.py
+├── models/
+│   ├── logistic_regression_model.pkl
+│   ├── random_forest_model.pkl
+│   ├── xgboost_model_pre_tuned.pkl
+│   └── tuned_xgboost_model.pkl
+├── exports/
+│   └── fraud_predictions.csv
+├── powerbi/
+│   └── Fraud_Dashboard.pbix
+└── README.md
+```
+
+---
+
+## 🔍 Key Learnings
+
+- Working with real-world imbalanced datasets requires careful evaluation metrics.
+- XGBoost is a strong performer for fraud use cases.
+- FastAPI is a lightweight yet powerful option for model deployment.
+- Power BI can turn complex ML outputs into business-friendly visuals.
+
+---
+
+##  Future Improvements
+
+- Integrate real-time fraud detection (streaming).
+- Add SHAP interpretability for feature importance.
+- Automate with Data Factory or Airflow.
+- CI/CD for model updates and dashboard refresh.
+
+---
+
+##  Final Note
+
+This project bridges **Data Science**, **Data Engineering**, and **Business Intelligence** to deliver real-world, production-ready fraud detection and insights.
+
+---
+
+ 
+**Tools Used**: Python, scikit-learn, XGBoost, FastAPI, Power BI, GitHub  
+**Dataset**: [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud)
