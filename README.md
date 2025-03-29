@@ -27,7 +27,7 @@ This end-to-end project combines **Machine Learning**, **Model Deployment**, and
 ├── fraud_model_final.pkl            # Final serialized model
 ├── fraud_predictions.csv            # Model predictions with probabilities
 ├── powerBIdashboard_CreditCard_fraud_detection.png # Dashboard Screenshot
-├── app/                             # (Optional) FastAPI deployment files
+├── app/                             # FastAPI deployment files
 └── README.md                        # This file
 ```
 
