@@ -132,5 +132,5 @@ Tested multiple models:
 
 ##  Author
 
- Built by [fuzzyzester](https://github.com/fuzzyzester) – Data Scientist & Engineer passionate about end-to-end solutions and real-world insights.
+ Built by Rianna Aalto [fuzzyzester](https://github.com/fuzzyzester) – Data Scientist & Engineer passionate about end-to-end solutions and real-world insights.
 
