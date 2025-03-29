@@ -52,6 +52,9 @@ PCA anonymizes sensitive information while preserving trends and patterns. This 
 - **Time**: Very weak → Dropped
 - **Amount**: Low correlation → Still kept after scaling
 
+### Addressing Class Imbalance
+Instead of oversampling or undersampling, I leveraged class_weight='balanced' in our Random Forest model. This allowed the model to give more focus to rare fraud cases without artificially changing the dataset size—ensuring better generalization and avoiding overfitting.
+
 ###  Models Trained
 - Logistic Regression
 - Random Forest ✅ (Best)
@@ -150,5 +153,5 @@ Initial version used non-dynamic measures, which caused them not to respond to s
 
 ##  Author
 
- Built by Rianna Aalto [fuzzyzester](https://github.com/fuzzyzester) – Data Scientist & Engineer passionate about end-to-end solutions and real-world insights.
+ Built by Rianna Aalto [fuzzyzester](https://github.com/fuzzyzester) –  passionate about end-to-end solutions and real-world insights.
 
