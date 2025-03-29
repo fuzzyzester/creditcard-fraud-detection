@@ -90,7 +90,7 @@ Tested multiple models:
 
 ##  Power BI Dashboard
 
- [View Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/powerBIdashboard_CreditCard_fraud_detection.png)
+ [View Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Creditcardfraudanalysis_dashboard.png)
 
 ###  Features
 
