@@ -88,30 +88,38 @@ Instead of oversampling or undersampling, I leveraged class_weight='balanced' in
 
 ##  Power BI Dashboard
 
+This Power BI dashboard translates machine learning outputs into actionable business intelligence. It provides a comprehensive view of credit card fraud detection performance, risk classification, and transaction-level insights for analysts and decision-makers.
+
  [View Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Creditcardfraudanalysis_dashboard.png)
 ![Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Creditcardfraudanalysis_dashboard.png)
 
-###  Features
+### Dashboard Highlights
 
-- KPIs for:
-  - Total Transactions
-  - Detected Frauds
-  - Fraud % (based on predictions)
-- Visuals:
-  - Donut chart for fraud vs. non-fraud
-  - Trend lines for fraud over time
-  - Top/Bottom amounts by fraud class
-  - Dynamic table of transactions
-- Interactive Slicer:
-  - Filter by prediction result or amount bracket
+####🔹 Key KPIs
+- Total Transactions Checked: Total records analyzed (e.g., 56,962)
+- Flagged as Potential Fraud: Count of transactions predicted as fraud (e.g., 95)
+- Overall Fraud Detection Score: Average confidence level across predictions (e.g., 0.85)
+- Prediction Accuracy: Model’s performance on test data (e.g., 100%)
+- Frauds Successfully Detected (%): Ratio of correctly identified frauds (e.g., 84%)
+- Correct Fraud Alerts (%): Precision of fraud alerts (e.g., 86%)
 
-> ℹ Note: In the KPI cards, static measures were used. To fully enable dynamic interactivity with slicers, consider converting them to **dynamic measures** using `CALCULATE` + `SELECTEDVALUE`.
+####🔹 Transaction Table (Interactive)
+- Displays actual vs. predicted label
+- Confidence levels and scaled fraud probability
+- Risk Level tags for readability (e.g., Very Low Risk, Low Risk)
 
+####🔹 Visual Insights
+- Pie Chart: Visual breakdown of predicted fraud vs. legitimate transactions (clearly showing imbalance)
+- Stacked Bar Chart: Fraud risk distribution across probability ranges – gives an overview of model sensitivity
+Slicer Control:
+- Adjust probability thresholds
+- Filter transactions by risk bracket or model confidence
 
-###  KPI Card Note
-Initial version used non-dynamic measures, which caused them not to respond to slicers. To fix this:
-1. Create measures using DAX (e.g., `Total_Frauds = CALCULATE(COUNTROWS(...), Class = 1)`)
-2. Replace static fields with these measures
+### KPI Cards and Dynamic Measures
+
+✅ Dynamic DAX Measures have been implemented using CALCULATE, SELECTEDVALUE, and context-aware filtering.
+
+All KPIs respond to slicer filters for accurate analysis.
 
 ---
 
