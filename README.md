@@ -22,21 +22,14 @@ With fraudulent transactions making up only 0.17% of the dataset, handling highl
 
 ##  About the Dataset
 
-Source: Kaggle Credit Card Fraud Dataset
-
-Transactions: 284,807
-
-Fraud Cases: 492 (~0.17%) → Highly imbalanced
-
-Features:
-
-V1 to V28: anonymized using PCA (Principal Component Analysis)
-
-Amount: transaction amount
-
-Time: seconds elapsed since the first transaction
-
-Class: target variable (1 = fraud, 0 = non-fraud)
+- Source: Kaggle Credit Card Fraud Dataset
+- Transactions: 284,807
+- Fraud Cases: 492 (~0.17%) → Highly imbalanced
+### Features:
+- V1 to V28: anonymized using PCA (Principal Component Analysis)
+- Amount: transaction amount
+- Time: seconds elapsed since the first transaction
+- Class: target variable (1 = fraud, 0 = non-fraud)
 
 ### Why PCA?
 
