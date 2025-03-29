@@ -95,7 +95,7 @@ This Power BI dashboard translates machine learning outputs into actionable busi
 
 ### Dashboard Highlights
 
-####🔹 Key KPIs
+🔹 Key KPIs
 - Total Transactions Checked: Total records analyzed (e.g., 56,962)
 - Flagged as Potential Fraud: Count of transactions predicted as fraud (e.g., 95)
 - Overall Fraud Detection Score: Average confidence level across predictions (e.g., 0.85)
@@ -103,12 +103,12 @@ This Power BI dashboard translates machine learning outputs into actionable busi
 - Frauds Successfully Detected (%): Ratio of correctly identified frauds (e.g., 84%)
 - Correct Fraud Alerts (%): Precision of fraud alerts (e.g., 86%)
 
-####🔹 Transaction Table (Interactive)
+🔹 Transaction Table (Interactive)
 - Displays actual vs. predicted label
 - Confidence levels and scaled fraud probability
 - Risk Level tags for readability (e.g., Very Low Risk, Low Risk)
 
-####🔹 Visual Insights
+🔹 Visual Insights
 - Pie Chart: Visual breakdown of predicted fraud vs. legitimate transactions (clearly showing imbalance)
 - Stacked Bar Chart: Fraud risk distribution across probability ranges – gives an overview of model sensitivity
 Slicer Control:
