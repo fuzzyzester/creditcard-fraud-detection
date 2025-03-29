@@ -89,6 +89,7 @@ Instead of oversampling or undersampling, I leveraged class_weight='balanced' in
 ##  Power BI Dashboard
 
  [View Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Creditcardfraudanalysis_dashboard.png)
+![Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Creditcardfraudanalysis_dashboard.png)
 
 ###  Features
 
