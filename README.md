@@ -90,8 +90,8 @@ Instead of oversampling or undersampling, I leveraged class_weight='balanced' in
 
 This Power BI dashboard translates machine learning outputs into actionable business intelligence. It provides a comprehensive view of credit card fraud detection performance, risk classification, and transaction-level insights for analysts and decision-makers. The Power BI dashboard uses the output from the prediction phase, which is a subset of the full dataset of 284,807 transactions.
 
- [View Dashboard]https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png
-![Power BI Dashboard]https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png
+ [View Dashboard] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)
+![Power BI Dashboard] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)
 
 ### Dashboard Highlights
 
