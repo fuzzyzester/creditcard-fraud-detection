@@ -76,14 +76,14 @@ Used `class_weight='balanced'` with Random Forest to emphasize rare fraud cases 
 
   
 [View Confusion Matrix](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)  
-![Confusion Matrix] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)
+![Confusion Matrix](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)
 
 - Classification Report
 - Precision-Recall Curve
 - ROC-AUC Score
 - 
-[View Model Comparison](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)  
-![Model Comparison] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)
+[View Model Comparison](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Comparison3Models.png)  
+![Model Comparison](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Comparison3Models.png)
 
 ---
 
@@ -99,8 +99,7 @@ Used `class_weight='balanced'` with Random Forest to emphasize rare fraud cases 
 
 The dashboard translates ML predictions into actionable fraud insights for analysts and managers.
 
-[View Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)  
-![Power BI Dashboard] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)
+![Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)
 
 
 ### KPIs
