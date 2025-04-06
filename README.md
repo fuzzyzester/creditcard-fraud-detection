@@ -25,6 +25,8 @@ It demonstrates how data science and engineering can work together to create sca
 - Fraudulent Transactions: 492 (0.17%) – Highly imbalanced dataset
 
 ### Features
+[View Feature Importance](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/FeatureImportance.png)  
+![Feature Importance](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/FeatureImportance.png)
 
 - V1 to V28: Anonymized using PCA
 - Amount: Transaction value
@@ -74,6 +76,11 @@ Used `class_weight='balanced'` with Random Forest to emphasize rare fraud cases 
 - Classification Report
 - Precision-Recall Curve
 - ROC-AUC Score
+[View Confusion Matrix](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)  
+![Confusion Matrix] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)
+
+[View Model Comparison](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)  
+![Model Comparison] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/ConfusionMatrixBestModel.png)
 
 ---
 
@@ -88,9 +95,9 @@ Used `class_weight='balanced'` with Random Forest to emphasize rare fraud cases 
 ## Power BI Dashboard Highlights
 
 The dashboard translates ML predictions into actionable fraud insights for analysts and managers.
+[View Power BI Dashboard](https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)  
+![Power BI Dashboard] (https://github.com/fuzzyzester/creditcard-fraud-detection/blob/main/Screenshot%202025-04-02%20113638.png)
 
-**Preview Screenshot:**  
-*Add your dashboard image here (e.g., `images/dashboard_preview.png`)*
 
 ### KPIs
 
