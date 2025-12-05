@@ -1,5 +1,5 @@
 
-# 💳 Credit Card Fraud Detection – End-to-End ML + Power BI Project
+# Credit Card Fraud Detection – End-to-End ML + Power BI Project
 
 This project presents a complete end-to-end fraud detection solution, combining machine learning, FastAPI model deployment, and interactive Power BI dashboards to identify and monitor fraudulent credit card transactions using a real-world dataset.
 
